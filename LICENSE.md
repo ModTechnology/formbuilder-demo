@@ -6,8 +6,7 @@ Licensing and Copyright Notice and Terms of Use
 It is based on the <a href="https://lhcformbuilder.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">NLM FormBuilder</a>, an <a href="https://github.com/LHNCBC/formbuilder-lhcforms" target="_blank" rel="noopener noreferrer">open-source</a> project developed by the
 <a href="https://lhncbc.nlm.nih.gov/" target="_blank" rel="noopener noreferrer">Lister Hill National Center for Biomedical Communication (LHNCBC)</a>.
 
-This software, including any associated website services or downloadable source code, was developed by AP-HP (Assistance Publique - Hôpitaux de Paris),
-Innovation & Données Department.
+This software, including any associated website services or downloadable source code, was developed by AP-HP (Assistance Publique - Hôpitaux de Paris).
 
 If this product includes all or a portion of the UCUM table, UCUM codes, and
 UCUM definitions or is derived from it, it is subject to a license from
