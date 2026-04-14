@@ -1,25 +1,278 @@
-#fixedTop {
-  top:0;
-  left:0;
-  height:84px;
-  right:0;
-  overflow:hidden;
+.page-defaults {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
 }
 
-#fixedBottom {
-  bottom:0;
-  height:65px;
-  left:0;
-  right:0;
-  overflow:hidden;
+#fixedTop {
+  flex-shrink: 0;
 }
 
 #resizableMiddle {
-  top:84px;
-  bottom:65px;
-  left:0;
-  right:0;
-  overflow:auto;
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+#fixedBottom {
+  flex-shrink: 0;
+}
+
+/* Contenu de la home page */
+.page-content {
+  padding: 30px clamp(30px, 5vw, 250px);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Tablet */
+@media (max-width: 1280px) {
+  .page-content {
+    padding: 30px 80px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .page-content {
+    padding: 20px 20px;
+  }
+}
+
+/* ── Editor nav & title (inside gray editor-body) ── */
+.editor-nav-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  flex-shrink: 0;
+}
+
+.editor-nav-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  color: #153D8A;
+  padding: 0;
+}
+.editor-nav-btn mat-icon { font-size: 20px; width: 20px; height: 20px; }
+.editor-nav-btn:hover { opacity: 0.75; }
+
+.editor-subheader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  gap: 50px;
+  margin: 0 30px;
+  background: #FFFFFF;
+  flex-shrink: 0;
+}
+
+.editor-title-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  flex: 1;
+}
+
+.editor-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 38px;
+  color: #000000;
+}
+
+.editor-subtitle {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #6E6E6E;
+}
+
+.editor-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.editor-icon-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #000000;
+}
+.editor-icon-btn mat-icon { font-size: 20px; width: 20px; height: 20px; }
+.editor-icon-btn:hover { background: #f0f0f0; }
+.editor-icon-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.editor-btn-save {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 30px;
+  height: 60px;
+  background: #153D8A;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #FFFFFF;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+.editor-btn-save:hover:not(:disabled) { background: #1a4aa8; }
+.editor-btn-save:disabled { opacity: 0.4; cursor: not-allowed; }
+
+@media (max-width: 1280px) {
+  .editor-nav-row { padding-left: 20px; padding-right: 20px; }
+  .editor-subheader { margin-left: 20px; margin-right: 20px; }
+}
+@media (max-width: 768px) {
+  .editor-subheader { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .editor-title { font-size: 24px; }
+  .editor-btn-save { width: 100%; }
+}
+
+/* ── Editor body (3-column layout — no tabs) ── */
+.editor-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #F3F5F9;
+  overflow: hidden;
+  min-height: 0;
+  gap: 20px;
+  padding: 20px 0 35px;
+}
+
+.editor-panels {
+  display: flex;
+  flex-direction: row;
+  gap: 19px;
+  padding: 0 30px;
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* ── Collapsible panels ── */
+.panel-collapsible {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  transition: flex 0.3s ease;
+}
+
+.panel-collapsible.panel-collapsed {
+  flex: 0 0 44px;
+  background: #FFFFFF;
+}
+
+/* Collapse button — positioned by form-fields component header */
+.panel-collapse-btn {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  z-index: 3;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F3F5F9;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #153D8A;
+  padding: 0;
+}
+.panel-collapse-btn:hover { background: #E0E8F5; }
+.panel-collapse-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+/* Collapsed bar (vertical title at top) */
+.panel-collapsed-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 4px;
+  gap: 8px;
+  width: 44px;
+  height: 100%;
+  cursor: pointer;
+}
+.panel-collapsed-bar:hover { background: #EBF2FF; }
+
+.panel-expand-icon {
+  color: #153D8A;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.panel-collapsed-title {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #153D8A;
+  white-space: nowrap;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.editor-panel-left {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  background: #FFFFFF;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.editor-panel-right {
+  display: flex;
+  flex: 2;
+  min-width: 0;
+  overflow: hidden;
+}
+
+@media (max-width: 1280px) {
+  .editor-panels { padding: 0 20px; }
 }
 
 .radio-group {
@@ -30,32 +283,12 @@
 .radio-button {
   margin: 5px;
 }
-
 .fix-pre {
   margin-top: revert;
 }
-
-.menuButton{
+.menuButton {
   padding: 2px;
 }
-
-.menuIcon{
+.menuIcon {
   vertical-align: middle;
-}
-
-.fab-center {
-  position: fixed;
-  top: 50%;
-  right: 25%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 60px;
-  font-size: 40px;
-  z-index: 1000;
-}
-@media (max-width: 768px) {
-  .fab-center {
-    top: 60%;
-    right: 10%;
-  }
 }

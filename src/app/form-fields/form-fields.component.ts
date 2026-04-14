@@ -21,31 +21,65 @@ import {PropertyGroup} from '@lhncbc/ngx-schema-form/lib/model';
 @Component({
   selector: 'lfb-form-fields',
   template: `
-    <div class="card-body content">
-      <div>
-        <h4 class="ms-2">Form level attributes</h4>
-        <p class="ms-4">Enter basic information about the form.</p>
-        <hr/>
-        <div class="container">
-          <sf-form #ngxForm [schema]="qlSchema" appReadonly
-                   [model]="questionnaire"
-                   (onChange)="valueChanged($event)"
-                   (modelReset)="onFormFieldsLoaded($event)"
-                   [validators]="validators"
-          ></sf-form>
-        </div>
-        <hr/>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <button type="button" class="btn btn-sm btn-primary mt-4 me-2 ms-auto" (click)="goToItemEditor()">{{ questionsButtonLabel }}</button>
-        </div>
+    <div class="fl-panel">
+      <div class="fl-panel-header">
+        <span class="fl-panel-title">General information</span>
+      </div>
+      <div class="fl-panel-body">
+        <sf-form #ngxForm [schema]="qlSchema" appReadonly
+                 [model]="questionnaire"
+                 (onChange)="valueChanged($event)"
+                 (modelReset)="onFormFieldsLoaded($event)"
+                 [validators]="validators"
+        ></sf-form>
       </div>
     </div>
   `,
   providers: [ExtensionsService],
   styles: [`
-    .content {
-      padding: 0.5rem;
+    .fl-panel {
+      display: flex;
+      flex-direction: column;
+      padding: 30px 40px 60px;
+      gap: 30px;
+      background: #FFFFFF;
+      height: 100%;
     }
+    .fl-panel-header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    .fl-panel-title {
+      font-family: 'Rubik', sans-serif;
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 28px;
+      color: #000000;
+    }
+    .fl-panel-body {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      flex: 1;
+    }
+    .fl-panel-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .fl-btn-next {
+      padding: 10px 30px;
+      height: 50px;
+      background: #153D8A;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      color: #FFFFFF;
+    }
+    .fl-btn-next:hover { background: #1a4aa8; }
   `]
 })
 export class FormFieldsComponent implements OnChanges, AfterViewInit {

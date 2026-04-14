@@ -1,14 +1,21 @@
-.table{
-  margin: 0px;
+.table {
+  margin: 0;
 }
+
 .action-column {
   text-align: end;
 }
+
+/* Collapse/expand button */
 .collapse-button {
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 4px 8px;
   margin-right: 5px;
-  margin-left: 2px;
+  background: transparent;
+  border: none;
+  color: #000;
+}
+.collapse-button:hover {
+  color: #153D8A;
 }
 
 .collapse-button.float-sm-right {
@@ -16,19 +23,72 @@
   margin-left: 2px;
 }
 
+/* ── Table ── */
 .lfb-table {
   margin-bottom: 0;
 }
+
+/* Transparent header (remove Bootstrap gray) */
+.lfb-table thead.table-active {
+  --bs-table-bg: transparent;
+  --bs-table-active-bg: transparent;
+  background: none !important;
+}
+
 .lfb-table th {
-  text-align: center;
+  text-align: left;
+  padding: 0 0 8px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  color: #000;
+  background: none !important;
+  border: none !important;
+  --bs-table-bg: transparent;
+  --bs-table-active-bg: transparent;
 }
+
+/* Hide info icons from table headers */
+.lfb-table th .lfb-title-icon {
+  display: none;
+}
+
 .lfb-table th, .lfb-table td {
-  padding: 0;
+  padding: 2px;
 }
+
 .table-header {
   font-weight: normal;
 }
 
+/* Remove row button */
+.array-remove-button {
+  color: #A8A8A8;
+  padding: 4px;
+  background: transparent;
+  border: none;
+}
+.array-remove-button:hover {
+  color: #FF0004;
+}
+
+/* Add button */
+.array-add-button {
+  margin-top: 8px;
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  color: #153D8A;
+  background: transparent;
+  border: 1px dashed #A8A8A8;
+  border-radius: 5px;
+  padding: 8px 16px;
+}
+.array-add-button:hover {
+  background: #F3F5F9;
+  color: #153D8A;
+  border-color: #153D8A;
+}
+
 .add-button-alert-popover {
-  background-color: lightgoldenrodyellow;
+  background-color: #FFF8E1;
 }

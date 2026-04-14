@@ -181,6 +181,7 @@ export class ItemComponent implements AfterViewInit, OnChanges, OnDestroy {
   warningMessage = 'Required attribute for transformation_type or enableWhen is missing!'
   @Input()
   questionnaire: fhir.Questionnaire = {resourceType: 'Questionnaire', status: 'draft', item: []};
+  treePanelOpen = true;
   itemList: any [];
   @Output()
   itemChange = new EventEmitter<any []>();

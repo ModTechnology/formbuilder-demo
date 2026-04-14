@@ -1,31 +1,57 @@
 @import "../../styles/colors.scss";
+
 #fine-print {
-  border-top: 2px solid $blue;
-  clear: left;
-  text-align: center;
-  font-size: 11px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 250px;
+  gap: 100px;
+  background: #FFFFFF;
+  border-top: 1px solid #e0e0e0;
+
+  @media (max-width: 1280px) {
+    padding: 30px 80px;
+    gap: 40px;
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 24px 20px;
+    gap: 20px;
+    text-align: center;
+  }
 }
 
-ul.horz-list {
-  margin: 0 30%;
-  padding: 1.5em 0;
-  border-top: 2px solid lightgrey;
+.footer-logo {
+  width: 160px;
+  height: 31px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
-#fine-print ul.horz-list li {
-  list-style-type: none;
-  display: inline;
-  padding-left: 8px;
-  padding-right: 10px;
-  border-right: 1px solid $blue;
+.footer-links {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  color: $dark-blue;
 }
 
-#fine-print ul.horz-list li.last-item {
-  border-right: none;
+.footer-links a {
+  color: $dark-blue;
+  text-decoration: none;
 }
 
-#usagov {
-  margin-bottom: -2px;
-  vertical-align: bottom;
-  width: 60px;
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-links .sep {
+  color: $dark-blue;
 }

@@ -1,22 +1,56 @@
 @import '../../styles/colors';
 
-
-h2 {
-  background-color: $dark-blue;
-}
-
-.container-card {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-
-.resource-card {
+/* ── Host fills the available area with gray background ── */
+:host {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  margin: 3px;
-  flex-grow: 1;
+  flex: 1;
+  background: #F3F5F9;
+  min-height: 100%;
+}
+
+/* ── Panel container (white card) ── */
+.terminology-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 40px;
+  gap: 30px;
+  background: #FFFFFF;
+  margin: 40px auto;
+  width: calc(100% - 80px);
+  max-width: 1760px;
+  border-radius: 5px;
+}
+
+/* ── Header ── */
+.terminology-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+
+.terminology-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 28px;
+  color: #153D8A;
+}
+
+/* ── Stepper container ── */
+.terminology-panel mat-horizontal-stepper {
+  width: 100%;
+  background: transparent;
+}
+
+/* ── Step content layout ── */
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 20px 0;
 }
 
 .stepper-container mat-form-field + mat-form-field {
@@ -35,56 +69,187 @@ h2 {
   margin: 12px 0;
 }
 
-.stepper-container .mat-radio-button {
-  margin: 0 12px;
-}
-
 .stepper-form-fields {
   display: flex;
   align-items: flex-start;
-
+  gap: 20px;
 }
 
 .stepper-container .stepper-form-fields mat-label {
   margin-top: 8px;
 }
 
-.title {
-  background-color: $light-blue;
+/* ── Step action row ── */
+.step-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 12px;
+  width: 100%;
 }
 
-mat-card-header {
+/* ── Navigation buttons ── */
+.terminology-panel .btn-primary,
+.terminology-panel button[matStepperNext],
+.terminology-panel button[matStepperPrevious] {
+  display: inline-flex;
   justify-content: center;
-  padding: 0px !important;
+  align-items: center;
+  padding: 10px 30px;
+  height: 50px;
+  background: #153D8A;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+.terminology-panel .btn-primary:hover:not(:disabled),
+.terminology-panel button[matStepperNext]:hover:not(:disabled) {
+  background: #1a4aa8;
+}
+.terminology-panel .btn-secondary {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  height: 50px;
+  background: #153D8A;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.terminology-panel .btn-secondary:hover {
+  background: #1a4aa8;
 }
 
-.mat-button-toggle-checked {
-  background-color: $blue;
-  color: $dark-blue;
+/* ── Download button (purple) ── */
+.terminology-panel .btn-download {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  height: 50px;
+  background: #77158A;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.terminology-panel .btn-download:hover:not(:disabled) { background: #8e1aa6; }
+.terminology-panel .btn-download:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ── Form grid (step 2) ── */
+.import-subtitle {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #000000;
+  margin-bottom: 20px;
 }
 
-.error-message {
-  margin: 4px 45px 0px;
-  display: list-item;
-  list-style-type: disc;
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
 }
 
+.form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.form-col-full {
+  grid-column: 1 / -1;
+}
+
+.tf-label {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 17px;
+  color: #000000;
+}
+
+/* ── OptionSwitcher toggle (replaces mat-radio-group) ── */
+.tf-toggle-group {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 6px;
+  gap: 3px;
+  background: #FCF8FF;
+  border-radius: 5px;
+  height: 51px;
+}
+
+.tf-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  height: 39px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #77158A;
+}
+.tf-toggle-btn.active {
+  background: #EFD8FF;
+}
+.tf-toggle-btn:hover:not(.active) {
+  background: #f5e8ff;
+}
+
+/* ── Other ── */
 .option-text {
-  align-content: center;
   padding-left: 18px;
 }
 
-.terminology-btn {
-  padding: 12px 0;
-  margin: 12px 0px;
+.help-msg {
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  color: #000000;
+  line-height: 1.5;
 }
 
-.header-title {
-  text-align: center;
-  padding: 12px 0;
+.generated-valueset-msg {
+  margin-bottom: 12px;
+  margin-top: 6px;
 }
 
-.card {
+.error-message {
+  margin: 4px 45px 0;
+  display: list-item;
+  list-style-type: disc;
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+  color: #d32f2f;
+}
+
+.container-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.resource-card, .card {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -97,26 +262,26 @@ mat-card-header {
   margin-bottom: 12px;
 }
 
-#resizableMiddle {
-  top: 84px;
-  bottom: 65px;
-  left: 0;
-  right: 0;
-  overflow: auto;
+mat-card-header {
+  justify-content: center;
+  padding: 0 !important;
 }
 
-.menuButton {
-  padding: 2px;
+.mat-button-toggle-checked {
+  background-color: $blue;
+  color: $dark-blue;
 }
 
-.menuIcon {
-  vertical-align: middle;
+.terminology-btn {
+  padding: 12px 0;
+  margin: 12px 0;
 }
 
-.generated-valueset-msg {
-  margin-bottom: 12px;
-  margin-top: 6px;
-}
-.help-msg{
-  font-size: 14px;
+.header-title {
+  text-align: center;
+  padding: 12px 0;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #153D8A;
 }

@@ -57,12 +57,11 @@ import {AuthService} from "../../../services/auth.service";
   `,
   styles: [`
     .lfb-row {
-      border-bottom: lightgrey solid 1px;
       padding: 2px 0 2px 0;
     }
 
     .lfb-row:hover {
-      background-color: lightgoldenrodyellow;
+      background-color: transparent;
     }
 
     .hideRow {

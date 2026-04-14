@@ -1,74 +1,11 @@
 <div *ngIf="openerUrl" class="bg-warning-subtle border border-black text-center">Notice: This page is sending changes
   back to the page that opened it, <span class="text-primary">{{ openerUrl }}</span></div>
 <div class="page-defaults container-fluid bg-white shadow">
-  <lfb-header id="fixedTop"></lfb-header>
+  <lfb-header id="fixedTop"
+    [showCreateButton]="guidingStep === 'home'"
+    (createQuestionnaire)="createQuestionnaireFromScratch()">
+  </lfb-header>
   <div id="resizableMiddle">
-    <nav class="navbar navbar-light bg-light ps-2" aria-label="Menu bar"
-         *ngIf="guidingStep !== 'home' && guidingStep !== 'create-terminology-resources'">
-
-      <div class="btn-group-sm me-2" role="group" aria-label="Export/Import form from server">
-        <button class="btn btn-secondary me-2 menuButton"
-                matTooltip="Save"
-                (click)="save()" [disabled]="isReadOnly ||!questionnaire "
-        >
-          <mat-icon class="menuIcon">cloud_upload</mat-icon>
-        </button>
-
-        <button type="button" class="btn btn-secondary me-2 menuButton" matTooltip="Load"
-                (click)="importFromFHIRServer()">
-          <mat-icon class="menuIcon">cloud_download</mat-icon>
-        </button>
-      </div>
-
-      <div class="btn-group-sm me-2" role="group" aria-label="Edit form attributes">
-        <button type="button" class="btn btn-secondary"
-                (click)="setStep('fl-editor')" [attr.disabled]="guidingStep === 'fl-editor' ? '' : null">Edit form
-          attributes
-        </button>
-      </div>
-      <div class="btn-group-sm me-2" role="group" aria-label="Edit questions">
-        <button type="button" class="btn btn-secondary me-2"
-                (click)="setStep('item-editor')" [attr.disabled]="guidingStep === 'item-editor' ? '' : null">Edit
-          questions
-        </button>
-      </div>
-
-      <div class="btn-group-sm me-2" role="group" aria-label="Edit questions" *ngIf="isAdmin">
-        <button type="button" class="btn btn-secondary" (click)="setStep('create-terminology-resources')">Terminological
-          resources
-        </button>
-      </div>
-
-      <div class="btn-group-sm me-2 ms-auto" role="group" aria-label="Advanced options">
-        <button type="button" class="btn btn-secondary menuButton" matTooltip="Advanced options" [matMenuTriggerFor]="advancedMenu">
-          <mat-icon class="menuIcon">more_horiz</mat-icon>
-        </button>
-      </div>
-
-      <div class="btn-group-sm me-2" role="group" aria-label="Preview">
-        <button id='previewBtn' type="button" class="btn btn-secondary menuButton" matTooltip="Preview"
-                (click)="showPreviewDlg()">
-          <mat-icon class="menuIcon">pageview</mat-icon>
-        </button>
-      </div>
-      <div class="btn-group-sm me-2" role="group" aria-label="Help" aria-label="Help">
-        <button type="button" matTooltip="Help" class="btn btn-secondary menuButton" (click)="goToHelp()">
-          <mat-icon class="menuIcon">help</mat-icon>
-        </button>
-      </div>
-      <div class="btn-group-sm me-2" role="group" aria-label="Help" aria-label="Help">
-        <button type="button" class="btn btn-secondary menuButton" matTooltip="Report an issue"
-                (click)="reportBug()">
-          <mat-icon class="menuIcon">bug_report</mat-icon>
-        </button>
-      </div>
-      <div class="btn-group-sm me-2" role="group" aria-label="Close editor">
-        <button id="closeBtn" type="button" matTooltip="Close" class="btn btn-secondary menuButton" (click)="close()">
-          <mat-icon class="menuIcon">close</mat-icon>
-        </button>
-      </div>
-
-    </nav>
     <a target="_self" id="exportAnchor" class="d-none">Export</a>
     <input #fileInput class="d-none" type="file" (change)="onFileSelected($event)" (click)="fileInput.value = null;">
     <div class="card bg-danger-subtle m-auto w-75" *ngIf="lformsErrorMessage">
@@ -78,11 +15,84 @@
     <ng-container *ngIf="guidingStep === 'home'">
       <ng-container *ngTemplateOutlet="home"></ng-container>
     </ng-container>
-    <ng-container *ngIf="guidingStep === 'fl-editor'">
-      <ng-container *ngTemplateOutlet="formLevelFields"></ng-container>
-    </ng-container>
-    <ng-container *ngIf="guidingStep === 'item-editor'">
-      <ng-container *ngTemplateOutlet="itemLevelFields"></ng-container>
+    <ng-container *ngIf="guidingStep === 'fl-editor' || guidingStep === 'item-editor'">
+      <div class="editor-body">
+        <!-- Navigation row (on gray background) -->
+        <div class="editor-nav-row">
+          <button class="editor-nav-btn" type="button" (click)="close()">
+            <mat-icon>arrow_back</mat-icon>
+            <span>Back</span>
+          </button>
+          <button class="editor-nav-btn" type="button" *ngIf="isAdmin" (click)="setStep('create-terminology-resources')">
+            <span>Terminological resources</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </div>
+
+        <!-- Title bar (white card on gray background) -->
+        <div class="editor-subheader">
+          <div class="editor-title-block">
+            <div class="editor-title">{{ questionnaire?.title || '—' }}</div>
+            <div class="editor-subtitle" *ngIf="questionnaire?.name">#{{ questionnaire.name }}</div>
+          </div>
+
+          <div class="editor-actions">
+            <button class="editor-icon-btn" type="button" matTooltip="Preview" (click)="showPreviewDlg()">
+              <mat-icon>pageview</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Load" (click)="importFromFHIRServer()">
+              <mat-icon>cloud_download</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Validate" (click)="validateQuestionnaire()">
+              <mat-icon>verified_user</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Export JSON" (click)="saveToFile()">
+              <mat-icon>upload_file</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Duplicate" (click)="onDuplicate()">
+              <mat-icon>content_copy</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Help" (click)="goToHelp()">
+              <mat-icon>help_outline</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Report an issue" (click)="reportBug()">
+              <mat-icon>bug_report</mat-icon>
+            </button>
+            <button class="editor-icon-btn" type="button" matTooltip="Import JSON" (click)="fileInput.click()">
+              <mat-icon>format_list_bulleted</mat-icon>
+            </button>
+            <button class="editor-btn-save" type="button" matTooltip="Save"
+                    (click)="save()" [disabled]="isReadOnly || !questionnaire">
+              Save
+            </button>
+          </div>
+        </div>
+
+        <app-alert></app-alert>
+        <div class="editor-panels">
+          <!-- Left panel: General information (collapsible) -->
+          <div class="panel-collapsible" [class.panel-collapsed]="!leftPanelOpen">
+            <div class="panel-collapsed-bar" [class.hidden]="leftPanelOpen" (click)="leftPanelOpen = true">
+              <mat-icon class="panel-expand-icon">chevron_right</mat-icon>
+              <span class="panel-collapsed-title">General information</span>
+            </div>
+            <lfb-form-fields [class.hidden]="!leftPanelOpen" class="editor-panel-left"
+                             [questionnaire]="formFields"
+                             (questionnaireChange)="formFieldsChanged($event)"
+            ></lfb-form-fields>
+            <button [class.hidden]="!leftPanelOpen" class="panel-collapse-btn" type="button"
+                    (click)="leftPanelOpen = false" matTooltip="Collapse">
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+          </div>
+
+          <!-- Middle + Right panels: Tree + Item properties (managed by item-component) -->
+          <lfb-item-component class="editor-panel-right"
+                              [questionnaire]="questionnaire"
+                              (itemChange)="itemComponentChanged($event)"
+          ></lfb-item-component>
+        </div>
+      </div>
     </ng-container>
     <ng-container *ngIf="guidingStep === 'create-terminology-resources'">
       <ng-container *ngTemplateOutlet="createTerminologyResources"></ng-container>
@@ -112,22 +122,13 @@
 </mat-menu>
 
 <ng-template #home>
-  <div class="card border-0 container">
-    <div class="card-body">
-      <lfb-fhir-search-page [hasResumeFormOption]="isAutoSaved() && !isDefaultForm()"
-      (selectedQuestionnaire)="onQuestionnaireSelected($event)"
-      (resumeTheLastForm)="onResumeTheLastForm()"
-      (importFromLocalFile)="onImportQuestionnaireFromLocalFile()"></lfb-fhir-search-page>
-    </div>
+  <div class="page-content">
+    <lfb-fhir-search-page [hasResumeFormOption]="isAutoSaved() && !isDefaultForm()"
+    (selectedQuestionnaire)="onQuestionnaireSelected($event)"
+    (resumeTheLastForm)="onResumeTheLastForm()"
+    (importFromLocalFile)="onImportQuestionnaireFromLocalFile()"></lfb-fhir-search-page>
   </div>
 
-  <button
-    type="button"
-    class="btn btn-primary rounded-circle d-flex justify-content-center align-items-center fab-center shadow"
-    (click)="createQuestionnaireFromScratch()"
-  >
-    +
-  </button>
 
 </ng-template>
 
@@ -135,25 +136,6 @@
   <create-terminology-resources questionnaire="{{questionnaire}}"></create-terminology-resources>
 </ng-template>
 
-<ng-template #formLevelFields>
-  <lfb-form-fields (state)="setStep($event)"
-                   [questionnaire]="formFields"
-                   (questionnaireChange)="formFieldsChanged($event)"
-                   [questionsButtonLabel]="createButtonLabel()"
-  ></lfb-form-fields>
-</ng-template>
-
-<ng-template #itemLevelFields>
-  <button type="button"
-          class="ms-2 fw-bold btn btn-link"
-          (click)="setStep('fl-editor')"
-  >{{ questionnaire.title }}
-  </button>
-  <app-alert></app-alert>
-  <lfb-item-component [questionnaire]="questionnaire"
-                      (itemChange)="itemComponentChanged($event)"
-  ></lfb-item-component>
-</ng-template>
 
 <ng-template #warnFormLoading let-modal>
   <div role="dialog" aria-labelledby="warningDlgTitle" class="modal-header bg-primary">

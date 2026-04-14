@@ -52,6 +52,8 @@ export class BasePageComponent implements OnInit {
   isReadOnly: boolean;
   isAdmin: boolean;
 
+  leftPanelOpen = true;
+
   constructor(private formService: FormService,
               private modelService: SharedObjectService,
               private modalService: NgbModal,
@@ -552,7 +554,7 @@ export class BasePageComponent implements OnInit {
   }
 
   private openQuestionnaireCreateDlgComponent(questionnaire: Questionnaire) {
-    const modalRef = this.modalService.open(QuestionnaireCreateDlgComponent);
+    const modalRef = this.modalService.open(QuestionnaireCreateDlgComponent, {size: 'xl'});
 
     modalRef.componentInstance.questionnaire = questionnaire;
 

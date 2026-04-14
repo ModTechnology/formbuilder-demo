@@ -22,6 +22,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {NgxSchemaFormComponent} from './ngx-schema-form/ngx-schema-form.component';
 import {TreeModule} from '@bugsplat/angular-tree-component';
@@ -301,6 +302,7 @@ function getProviders() {
     MatTabsModule,
     MatToolbarModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     NgbModule,
     SchemaFormModule.forRoot(),
     TreeModule,

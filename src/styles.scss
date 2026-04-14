@@ -1,4 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Rubik:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Unbounded:wght@200;400&display=swap');
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 @import 'styles/colors';
@@ -50,6 +51,15 @@ $theme-colors: (
   border: none;
 }
 
+/* Questionnaire create dialog */
+lfb-questionnaire-create-dlg .modal-content,
+ngb-modal-window .modal-content:has(lfb-questionnaire-create-dlg) {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0px 4px 57px rgba(0, 0, 0, 0.11);
+  padding: 0;
+}
+
 .lfb-spinner.modal-dialog {
   transform: unset !important;
 }
@@ -77,11 +87,13 @@ $theme-colors: (
 
 html, body {
   height: 100%;
+  background: #FFFFFF;
 }
 
 body {
   margin: 0;
   font-family: "Montserrat", "Open Sans", sans-serif;
+  background: #FFFFFF;
 }
 
 .highlight {
@@ -101,4 +113,546 @@ body {
 }
 .h-30px {
   height: 30px;
+}
+
+/* ── mat-stepper overrides (terminology page) ── */
+create-terminology-resources .mat-horizontal-stepper-header-container {
+  margin-bottom: 30px;
+}
+
+/* Inactive step icon */
+create-terminology-resources .mat-step-icon {
+  background: linear-gradient(151.44deg, #FFFFFF -62.65%, #FBFBFE 83.01%);
+  border: 1px solid #F4F8FF;
+  box-shadow: 0px 3px 6px rgba(7, 0, 110, 0.03), inset 0px -2px 2px rgba(27, 35, 85, 0.07);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  color: #A0A6BD;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+/* Active step icon */
+create-terminology-resources .mat-step-icon-selected,
+create-terminology-resources .mat-step-icon-state-edit {
+  background: #153D8A;
+  border: none;
+  box-shadow: none;
+  color: #FFFFFF;
+}
+
+/* Step label */
+create-terminology-resources .mat-step-label {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+}
+
+create-terminology-resources .mat-step-label-selected {
+  font-weight: 600;
+}
+
+/* Connector line */
+create-terminology-resources .mat-stepper-horizontal-line {
+  border-top-color: #E0E0E0;
+}
+
+/* ── sf-form widget overrides ── */
+
+/* Labels */
+sf-form .form-label,
+sf-form label.form-label,
+sf-form label.col-form-label,
+sf-form .col-form-label,
+lfb-ngx-schema-form .form-label,
+lfb-ngx-schema-form label.col-form-label,
+lfb-ngx-schema-form .col-form-label {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000 !important;
+  margin-bottom: 5px;
+}
+
+/* Text inputs */
+sf-form input.form-control,
+sf-form input.form-control-sm {
+  min-height: 50px;
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 12px 15px;
+  color: #000000;
+  box-shadow: none;
+}
+sf-form input.form-control:focus,
+sf-form input.form-control-sm:focus {
+  border-color: #153D8A;
+  box-shadow: none;
+}
+
+/* Select */
+sf-form select.form-select,
+sf-form select.form-select-sm {
+  min-height: 50px;
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 10px 15px;
+  color: #000000;
+  box-shadow: none;
+}
+sf-form select.form-select:focus,
+sf-form select.form-select-sm:focus {
+  border-color: #153D8A;
+  box-shadow: none;
+}
+
+/* Date input + calendar button */
+sf-form .input-group input.form-control {
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+}
+sf-form .input-group .btn-outline-secondary {
+  min-height: 50px;
+  border-color: #A8A8A8;
+  border-left: none;
+  border-radius: 0 5px 5px 0;
+  color: #A8A8A8;
+  background: white;
+}
+sf-form .input-group .btn-outline-secondary:hover {
+  background: #f5f5f5;
+  color: #153D8A;
+}
+
+/* Boolean radio — OptionSwitcher */
+sf-form [role="group"],
+lfb-ngx-schema-form [role="group"] {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background: #FCF8FF;
+  border-radius: 5px;
+  padding: 6px;
+  gap: 3px;
+}
+sf-form .btn-check + .btn-outline-success,
+sf-form .btn-check + .btn-outline-primary {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #77158A;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+  line-height: 19px;
+}
+sf-form .btn-check:checked + .btn-outline-success,
+sf-form .btn-check:checked + .btn-outline-primary {
+  background: #EFD8FF;
+  color: #77158A;
+  border: none;
+  box-shadow: none;
+}
+sf-form .btn-check + .btn-outline-success:hover,
+sf-form .btn-check + .btn-outline-primary:hover {
+  background: #f5e8ff;
+  color: #77158A;
+  border: none;
+  box-shadow: none;
+}
+sf-form .btn-outline-success:focus,
+sf-form .btn-outline-primary:focus,
+sf-form .btn-outline-success:active,
+sf-form .btn-outline-primary:active,
+lfb-ngx-schema-form .btn-outline-success:focus,
+lfb-ngx-schema-form .btn-outline-primary:focus {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+/* Textareas */
+sf-form textarea.form-control {
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 12px 15px;
+  color: #000000;
+  box-shadow: none;
+  min-height: 100px;
+  resize: vertical;
+}
+sf-form textarea.form-control:focus {
+  border-color: #153D8A;
+  box-shadow: none;
+}
+
+/* Info tooltip icons */
+sf-form .fa-info-circle,
+sf-form .bi-info-circle,
+lfb-label .fa-info-circle {
+  color: #A8A8A8;
+  font-size: 16px;
+}
+
+/* Table overrides (Source/Comment etc.) */
+sf-form table,
+sf-form .table {
+  border: none;
+  font-family: 'Rubik', sans-serif;
+  font-size: 14px;
+}
+sf-form table th,
+sf-form .table th {
+  background: #F3F5F9;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000000;
+  border: 1px solid #E0E0E0;
+  padding: 8px 12px;
+}
+sf-form table td,
+sf-form .table td {
+  border: 1px solid #E0E0E0;
+  padding: 8px 12px;
+}
+sf-form table input.form-control,
+sf-form .table input.form-control {
+  height: 40px;
+  font-size: 14px;
+  border: 1px solid #A8A8A8;
+}
+sf-form table textarea.form-control,
+sf-form .table textarea.form-control {
+  min-height: 40px;
+  font-size: 14px;
+}
+
+/* Accordion / collapsible sections */
+sf-form .card-header,
+sf-form .accordion-header {
+  background: transparent;
+  border: none;
+  padding: 10px 0;
+}
+sf-form .card-header button,
+sf-form .accordion-button {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #153D8A;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+}
+sf-form .accordion-button:not(.collapsed) {
+  background: transparent;
+  color: #153D8A;
+  box-shadow: none;
+}
+sf-form .card-body,
+sf-form .accordion-body {
+  padding: 10px 0;
+}
+
+/* Checkbox overrides */
+sf-form .form-check-input:checked {
+  background-color: #153D8A;
+  border-color: #153D8A;
+}
+
+/* Force vertical stacking: label above input (not side-by-side) */
+sf-form .widget.row,
+sf-form .row.m-0 {
+  flex-direction: column !important;
+}
+sf-form .widget.row > [class*="col-"],
+sf-form .row.m-0 > [class*="col-"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* ── Info help icons ── */
+
+/* For fields with input/select/textarea: move icon inside the field */
+sf-form .row.m-0:has(input.form-control) > lfb-label .lfb-help-icon,
+sf-form .row.m-0:has(select.form-select) > lfb-label .lfb-help-icon,
+sf-form .row.m-0:has(select.form-select-sm) > lfb-label .lfb-help-icon,
+sf-form .row.m-0:has(textarea.form-control) > lfb-label .lfb-help-icon,
+sf-form .row.m-0:has(.input-group) > lfb-label .lfb-help-icon,
+lfb-ngx-schema-form .row.m-0:has(input.form-control) > lfb-label .lfb-help-icon,
+lfb-ngx-schema-form .row.m-0:has(select.form-select) > lfb-label .lfb-help-icon,
+lfb-ngx-schema-form .row.m-0:has(textarea.form-control) > lfb-label .lfb-help-icon,
+lfb-ngx-schema-form .row.m-0:has(.input-group) > lfb-label .lfb-help-icon {
+  position: absolute;
+  right: 12px;
+  top: calc(100% + 17px);
+  z-index: 2;
+}
+
+/* Reserve right space in inputs so text doesn't overlap the icon */
+sf-form input.form-control,
+sf-form textarea.form-control,
+sf-form select.form-select,
+sf-form select.form-select-sm,
+lfb-ngx-schema-form input.form-control,
+lfb-ngx-schema-form textarea.form-control,
+lfb-ngx-schema-form select.form-select {
+  padding-right: 40px !important;
+}
+
+/* Remove card borders around tables */
+.lfb-table,
+lfb-ngx-schema-form .card,
+sf-form .card {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Stack table columns vertically */
+.lfb-table tr.d-flex {
+  flex-direction: column !important;
+  gap: 0;
+}
+.lfb-table tr.d-flex > [class*="col-sm"]:not(.col-sm-1) {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  padding: 0 !important;
+  margin-bottom: 12px;
+}
+
+/* Force equal height in table cells (inputs & textareas) */
+.lfb-table td textarea.form-control {
+  height: 50px !important;
+  min-height: 50px !important;
+  max-height: 50px !important;
+  resize: none !important;
+  overflow: hidden !important;
+  padding: 12px 15px !important;
+}
+.lfb-table td input.form-control,
+.lfb-table td select.form-select,
+.lfb-table td select.form-select-sm {
+  height: 50px !important;
+  padding: 12px 15px !important;
+}
+
+/* Kill yellow readonly/autofill backgrounds */
+sf-form input.form-control[readonly],
+lfb-ngx-schema-form input.form-control[readonly] {
+  background-color: #FFFFFF;
+}
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset !important;
+}
+
+/* Form group spacing — override Bootstrap .m-0 { margin: 0 !important } */
+sf-form .row.m-0,
+lfb-ngx-schema-form .row.m-0 {
+  margin-bottom: 20px !important;
+}
+
+/* ── Item editor form field overrides ── */
+lfb-ngx-schema-form .form-label,
+lfb-ngx-schema-form label {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+}
+lfb-ngx-schema-form input.form-control {
+  min-height: 50px;
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 10px 15px;
+  box-shadow: none;
+}
+lfb-ngx-schema-form input.form-control:focus {
+  border-color: #153D8A;
+  box-shadow: none;
+}
+lfb-ngx-schema-form textarea.form-control {
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 10px 15px;
+  box-shadow: none;
+  min-height: 50px;
+}
+lfb-ngx-schema-form textarea.form-control:focus {
+  border-color: #153D8A;
+  box-shadow: none;
+}
+lfb-ngx-schema-form select.form-select,
+lfb-ngx-schema-form select.form-select-sm {
+  min-height: 50px;
+  border: 1px solid #A8A8A8;
+  border-radius: 5px;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  padding: 10px 15px;
+  box-shadow: none;
+}
+lfb-ngx-schema-form select.form-select:focus {
+  border-color: #153D8A;
+  box-shadow: none;
+}
+lfb-ngx-schema-form .form-group {
+  margin-bottom: 20px;
+}
+
+/* Vertical stacking in item editor too */
+lfb-ngx-schema-form .widget.row,
+lfb-ngx-schema-form .row.m-0 {
+  flex-direction: column !important;
+}
+lfb-ngx-schema-form .widget.row > [class*="col-"],
+lfb-ngx-schema-form .row.m-0 > [class*="col-"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: none !important;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Boolean toggles in item editor */
+lfb-ngx-schema-form [role="group"] {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #FCF8FF;
+  border-radius: 5px;
+  padding: 6px;
+  gap: 3px;
+}
+lfb-ngx-schema-form .btn-check + .btn-outline-success,
+lfb-ngx-schema-form .btn-check + .btn-outline-primary {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #77158A;
+  background: transparent;
+  border: none;
+  border-radius: 3px;
+  padding: 10px 20px;
+}
+lfb-ngx-schema-form .btn-check:checked + .btn-outline-success,
+lfb-ngx-schema-form .btn-check:checked + .btn-outline-primary {
+  background: #EFD8FF;
+  color: #77158A;
+  border: none;
+  box-shadow: none;
+}
+
+/* ── Item component panels (3-column editor layout) ── */
+lfb-item-component {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  gap: 19px;
+}
+
+lfb-item-component .mat-sidenav-container {
+  flex: 1;
+  background: #F3F5F9 !important;
+}
+
+lfb-item-component .mat-sidenav {
+  background: #FFFFFF !important;
+  padding: 30px 40px 60px !important;
+  border-right: 19px solid #F3F5F9 !important;
+  box-shadow: none !important;
+}
+
+lfb-item-component .mat-sidenav-content {
+  background: #FFFFFF !important;
+  padding: 30px 40px 60px !important;
+  overflow-y: auto !important;
+}
+
+
+/* Tree "Add new item" link */
+lfb-item-component .btn-primary {
+  background: transparent !important;
+  border: none !important;
+  color: #153D8A !important;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+lfb-item-component .btn-primary:hover {
+  text-decoration: underline;
+}
+
+/* ── mat-form-field overrides for terminology page ── */
+create-terminology-resources mat-form-field {
+  width: 100%;
+}
+
+/* Outline border → black */
+create-terminology-resources .mdc-notched-outline__leading,
+create-terminology-resources .mdc-notched-outline__notch,
+create-terminology-resources .mdc-notched-outline__trailing {
+  border-color: #000000 !important;
+  border-width: 1px !important;
+}
+create-terminology-resources mat-form-field:hover .mdc-notched-outline__leading,
+create-terminology-resources mat-form-field:hover .mdc-notched-outline__notch,
+create-terminology-resources mat-form-field:hover .mdc-notched-outline__trailing {
+  border-color: #153D8A !important;
+}
+create-terminology-resources mat-form-field.mat-focused .mdc-notched-outline__leading,
+create-terminology-resources mat-form-field.mat-focused .mdc-notched-outline__notch,
+create-terminology-resources mat-form-field.mat-focused .mdc-notched-outline__trailing {
+  border-color: #153D8A !important;
+  border-width: 2px !important;
+}
+
+/* Input height and font */
+create-terminology-resources .mat-mdc-form-field-infix {
+  min-height: 50px !important;
+  padding-top: 13px !important;
+  padding-bottom: 13px !important;
+}
+create-terminology-resources .mat-mdc-input-element,
+create-terminology-resources .mat-mdc-select-value-text {
+  font-family: 'Rubik', sans-serif !important;
+  font-weight: 300 !important;
+  font-size: 14px !important;
+  color: #000000 !important;
+}
+
+/* Remove floating label (we use external labels) */
+create-terminology-resources .mdc-notched-outline__notch {
+  border-right: none !important;
+}
+create-terminology-resources .mat-mdc-form-field-label-wrapper {
+  display: none;
 }

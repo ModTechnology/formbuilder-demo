@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService, UserProfile} from '../services/auth.service';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -8,33 +8,34 @@ import {environment} from "../../environments/environment";
 @Component({
   selector: 'lfb-header',
   template: `
-    <mat-toolbar id="header" class="ps-0 pe-0 ">
-      <mat-icon id="logo" svgIcon="logo-formbuilder" aria-label="Home"></mat-icon>
-      <div id="siteNameBox">
-        <div><a style="padding: 0px" mat-button id="siteName" href="/">
-          <span class="fs-4">AP-HP FormBuilder</span>
-        </a></div>
-        <div class="fs-6">A tool for building HL7<sup>®</sup> FHIR<sup>®</sup> Questionnaires</div>
+    <div id="header">
+      <img id="logo" src="assets/images/logo.svg" alt="FormBuilder logo">
 
+      <div id="siteNameBox">
+        <div id="siteName">AP-HP Formbuilder</div>
+        <div id="siteSlogan">Your tool to create HL7<sup>®</sup> FHIR<sup>®</sup> questionnaires.</div>
       </div>
-      <div *ngIf="isKeycloakEnabled" class="float-lg-right ">
-        <!--<div>{{ userProfile?.firstName }} {{ userProfile?.lastName }}</div>-->
-        <div class="fs-6 role">{{ getFormattedUserRole() }}</div>
-      </div>
-      <div *ngIf="isKeycloakEnabled" class="float-lg-right" style="padding-left: 16px">
-        <button class="btn btn-primary me-2 menuButton" matTooltip="Logout" (click)="logOut()">
-          <mat-icon class="menuIcon">exit_to_app</mat-icon>
+
+      <div id="headerRight">
+        <div *ngIf="isKeycloakEnabled" class="role-label">{{ getFormattedUserRole() }}</div>
+        <button *ngIf="showCreateButton" id="btnNewQuestionnaire" type="button" (click)="createQuestionnaire.emit()">
+          <span>+</span> New questionnaire
+        </button>
+        <button *ngIf="isKeycloakEnabled" class="btn-logout" matTooltip="Logout" (click)="logOut()">
+          <mat-icon>exit_to_app</mat-icon>
         </button>
       </div>
-
-    </mat-toolbar>
+    </div>
   `,
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
 
-  userProfile: UserProfile;
-  isKeycloakEnabled: boolean;
+  userProfile: UserProfile | undefined;
+  isKeycloakEnabled: boolean = false;
+
+  @Input() showCreateButton: boolean = false;
+  @Output() createQuestionnaire = new EventEmitter<void>();
 
   constructor(public loginService: AuthService,
               private iconRegistry: MatIconRegistry,

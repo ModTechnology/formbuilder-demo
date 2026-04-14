@@ -1,16 +1,14 @@
-<form [formGroup]="uploadForm">
-  <mat-form-field class="file-upload-container">
-    <mat-label>File {{ fileName }}</mat-label>
-    <button mat-icon-button matPrefix id="btn_{{fileName}}" (click)="chooseFile(fileInput)">
-      <mat-icon>attach_file</mat-icon>
-    </button>
-    <input type="text" readonly matInput formControlName="display"/>
-    <input id="input_{{fileName}}"
-      type="file"
-      hidden
-      #fileInput
-      accept=".csv" (change)="handleFileInputChange(fileInput.files)"
-    />
-    <button  mat-icon-button matIconSuffix (click)="reset()"><mat-icon>clear</mat-icon></button>
-  </mat-form-field>
-</form>
+<div class="fu-wrapper">
+  <input id="input_{{fileName}}"
+    type="file"
+    hidden
+    #fileInput
+    accept=".csv"
+    (change)="handleFileInputChange(fileInput.files)"
+  />
+  <button type="button" class="fu-attach-btn" (click)="chooseFile(fileInput)">Attach a file</button>
+  <span class="fu-filename">{{ uploadForm.value.display || '' }}</span>
+  <button type="button" class="fu-clear-btn" *ngIf="uploadForm.value.display" (click)="reset()">
+    <mat-icon>clear</mat-icon>
+  </button>
+</div>

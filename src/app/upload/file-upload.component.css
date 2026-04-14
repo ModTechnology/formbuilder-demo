@@ -1,3 +1,61 @@
-.file-upload-container{
+.fu-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px;
+  gap: 3px;
+  background: #FCF8FF;
+  border-radius: 5px;
+  height: 51px;
   width: 100%;
+}
+
+.fu-attach-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  height: 39px;
+  background: #EFD8FF;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  color: #77158A;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.fu-attach-btn:hover {
+  background: #e0c4f5;
+}
+
+.fu-filename {
+  flex: 1;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #77158A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fu-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #77158A;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+.fu-clear-btn:hover {
+  background: #EFD8FF;
 }
