@@ -42,22 +42,13 @@
           </div>
 
           <!-- Type de recherche -->
-          <label class="filter-radio">
-            <span>Text</span>
+          <label class="filter-radio" *ngFor="let sf of searchFieldList; let i = index">
+            <span>{{ sf.display }}</span>
             <input
               type="radio"
               name="searchType"
-              [checked]="searchField === searchFieldList[0]"
-              (change)="searchField = searchFieldList[0]"
-            >
-          </label>
-          <label class="filter-radio">
-            <span>Code Item</span>
-            <input
-              type="radio"
-              name="searchType"
-              [checked]="searchField === searchFieldList[1]"
-              (change)="searchField = searchFieldList[1]"
+              [checked]="searchField === sf"
+              (change)="searchField = sf"
             >
           </label>
 

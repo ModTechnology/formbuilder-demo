@@ -1,88 +1,108 @@
-<!-- Collapsed tree bar (own block) -->
-<div class="tree-collapsed-bar" [class.hidden]="treePanelOpen" (click)="treePanelOpen = true">
-  <mat-icon class="tree-expand-icon">chevron_right</mat-icon>
-  <span class="tree-collapsed-title">Arborescence</span>
-</div>
+<div class="item-flex-container">
 
-<mat-sidenav-container>
-  <mat-sidenav #drawer mode="side" [opened]="treePanelOpen" disableClose>
-    <div class="sidenav-header">
-      Arborescence
-      <button class="item-collapse-btn" type="button" (click)="treePanelOpen = false" matTooltip="Collapse">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
+  <!-- Tree panel -->
+  <div class="item-panel tree-panel" [class.panel-collapsed]="!treePanelOpen">
+    <div class="panel-collapsed-bar" *ngIf="!treePanelOpen" (click)="treePanelOpen = true">
+      <mat-icon class="panel-expand-icon">chevron_right</mat-icon>
+      <span class="panel-collapsed-title">Arborescence</span>
     </div>
-    <input id="filter" class="form-control" #filter (keyup)="filterNodes(filter.value, tree.treeModel)"
-           placeholder="Filter items by label or linkId"/>
-    <span (focusin)="treeInitialFocus($event)">
-            <tree-root #tree
-                       [nodes]="itemList"
-                       [options]="treeOptions"
-                       (event)="onTreeEvent($event)"
-                       role="tree"
-            >
-              <ng-template #treeNodeWrapperTemplate let-node let-index="index">
-                <div class="node-wrapper" [style.padding-left]="node.getNodePadding()" role="group">
-                  <tree-node-expander [node]="node"></tree-node-expander>
-                  <div class="node-content-wrapper "
-                       [class.node-content-wrapper-active]="node.isActive"
-                       [class.node-content-wrapper-focused]="node.isFocused"
-                       (click)="node.mouseAction('click', $event)"
-                       (dblclick)="node.mouseAction('dblClick', $event)"
-                       (contextmenu)="node.mouseAction('contextMenu', $event)"
-                       (treeDrop)="node.onDrop($event)"
-                       [treeAllowDrop]="node.allowDrop"
-                       [treeDrag]="node"
-                       [treeDragEnabled]="node.allowDrag()"
-                       [attr.tabindex]="node.isActive ? '0' : null"
-                       role="treeitem"
-                       [attr.aria-selected]="node.isActive"
-                  >
-                    <tree-node-content [node]="node" [index]="index" [template]="treeNodeTemplate"></tree-node-content>
-                  </div>
+    <ng-container *ngIf="treePanelOpen">
+      <div class="item-panel-header">
+        <span class="item-panel-title">Arborescence</span>
+        <button class="item-collapse-btn" type="button" (click)="treePanelOpen = false" matTooltip="Collapse">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      </div>
+      <div class="item-panel-body" #drawer>
+        <input id="filter" class="form-control" #filter (keyup)="filterNodes(filter.value, tree.treeModel)"
+               placeholder="Filter items by label or linkId"/>
+        <span (focusin)="treeInitialFocus($event)">
+          <tree-root #tree
+                     [nodes]="itemList"
+                     [options]="treeOptions"
+                     (event)="onTreeEvent($event)"
+                     role="tree"
+          >
+            <ng-template #treeNodeWrapperTemplate let-node let-index="index">
+              <div class="node-wrapper" [style.padding-left]="node.getNodePadding()" role="group">
+                <tree-node-expander [node]="node"></tree-node-expander>
+                <div class="node-content-wrapper"
+                     [class.node-content-wrapper-active]="node.isActive"
+                     [class.node-content-wrapper-focused]="node.isFocused"
+                     (click)="node.mouseAction('click', $event)"
+                     (dblclick)="node.mouseAction('dblClick', $event)"
+                     (contextmenu)="node.mouseAction('contextMenu', $event)"
+                     (treeDrop)="node.onDrop($event)"
+                     [treeAllowDrop]="node.allowDrop"
+                     [treeDrag]="node"
+                     [treeDragEnabled]="node.allowDrag()"
+                     [attr.tabindex]="node.isActive ? '0' : null"
+                     role="treeitem"
+                     [attr.aria-selected]="node.isActive"
+                >
+                  <tree-node-content [node]="node" [index]="index" [template]="treeNodeTemplate"></tree-node-content>
                 </div>
-              </ng-template>
-              <ng-template #treeNodeTemplate let-node let-index="index">
-                <div [ngClass]="node.nodeClass"
-                     class="{{node.data.__$hiddenItemYesNo ? 'disabled-node ': ''}} d-flex"
-                     #tooltip="matTooltip" [matTooltip]="node.displayField">
-                  <span class="node-display-prefix" aria-hidden="true"
-                        [innerHTML]="getIndexPath(node).join('.') | highlight: filter.value"></span>
-                  <span aria-hidden="true" class="text-truncate flex-fill node-display-field" [ngClass]="node.nodeClass"
-                        [innerHTML]="node.displayField | highlight: filter.value"></span>
-                  <mat-icon class="warningIcon" [matTooltip]="warningMessage" *ngIf="hasWarnings(node)" color="warn">warning</mat-icon>
-                  <ng-container *ngTemplateOutlet="nodeMenu; context: {node: node, tooltip: tooltip}"></ng-container>
-                </div>
-              </ng-template>
-              <ng-template #loadingTemplate><span></span></ng-template>
-            </tree-root>
-          </span>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="sidenav-header" aria-live="polite" aria-atomic="true" id="itemContent">
-      <span *ngIf="focusNode?.data?.text">{{ getIndexPath(focusNode).join('.') }} {{ focusNode.data.text }}</span>
-      <span *ngIf="!focusNode?.data?.text">Current Item</span>
-    </div>
-    <ng-container *ngIf="editType === 'ui'">
-      <lfb-spinner [show]="spinner$ | async"></lfb-spinner>
-      <lfb-ngx-schema-form [isHiddenRadioItem]="hasHiddenRadio()" disabled="true" #uiEditor [model]="itemData"
-                           (valueChange)="itemChanged($event)" appReadonly
-                           (errorsChanged)="onErrorsChanged($event)"
-                           (warningsChanged)="onWarningsChanged($event)"></lfb-ngx-schema-form>
+              </div>
+            </ng-template>
+            <ng-template #treeNodeTemplate let-node let-index="index">
+              <div [ngClass]="node.nodeClass"
+                   class="{{node.data.__$hiddenItemYesNo ? 'disabled-node ': ''}} d-flex"
+                   #tooltip="matTooltip" [matTooltip]="node.displayField">
+                <span class="node-display-prefix" aria-hidden="true"
+                      [innerHTML]="getIndexPath(node).join('.') | highlight: filter.value"></span>
+                <span aria-hidden="true" class="text-truncate flex-fill node-display-field" [ngClass]="node.nodeClass"
+                      [innerHTML]="node.displayField | highlight: filter.value"></span>
+                <mat-icon class="warningIcon" [matTooltip]="warningMessage" *ngIf="hasWarnings(node)" color="warn">warning</mat-icon>
+                <ng-container *ngTemplateOutlet="nodeMenu; context: {node: node, tooltip: tooltip}"></ng-container>
+              </div>
+            </ng-template>
+            <ng-template #loadingTemplate><span></span></ng-template>
+          </tree-root>
+        </span>
+      </div>
     </ng-container>
-    <ng-container *ngIf="editType === 'json'">
-      <lfb-item-json-editor #jsonEditor></lfb-item-json-editor>
-    </ng-container>
-    <div *ngIf="errors$ | async" class="text-danger" style="margin: 10px 0;" aria-hidden="true">{{ errorMessage }}</div>
-    <div class="item-actions" appReadonly>
-      <button type="button" class="btn-delete-item"
-              [disabled]="!(focusNode && focusNode.parent)"
-              aria-label="Delete this item"
-              (click)="confirmItemDelete()">Delete this item
-      </button>
+  </div>
+
+  <!-- Properties panel -->
+  <div class="item-panel properties-panel" [class.panel-collapsed]="!rightPanelOpen">
+    <div class="panel-collapsed-bar" *ngIf="!rightPanelOpen" (click)="rightPanelOpen = true">
+      <mat-icon class="panel-expand-icon">chevron_right</mat-icon>
+      <span class="panel-collapsed-title">Properties</span>
     </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+    <ng-container *ngIf="rightPanelOpen">
+      <div class="item-panel-header">
+        <span class="item-panel-title" aria-live="polite" aria-atomic="true" id="itemContent">
+          <span *ngIf="focusNode?.data?.text">{{ getIndexPath(focusNode).join('.') }} {{ focusNode.data.text }}</span>
+          <span *ngIf="!focusNode?.data?.text">Current Item</span>
+        </span>
+        <button class="item-collapse-btn" type="button" (click)="rightPanelOpen = false" matTooltip="Collapse">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+      </div>
+      <div class="item-panel-body">
+        <ng-container *ngIf="editType === 'ui'">
+          <lfb-spinner [show]="spinner$ | async"></lfb-spinner>
+          <lfb-ngx-schema-form [isHiddenRadioItem]="hasHiddenRadio()" disabled="true" #uiEditor [model]="itemData"
+                               (valueChange)="itemChanged($event)" appReadonly
+                               (errorsChanged)="onErrorsChanged($event)"
+                               (warningsChanged)="onWarningsChanged($event)"></lfb-ngx-schema-form>
+        </ng-container>
+        <ng-container *ngIf="editType === 'json'">
+          <lfb-item-json-editor #jsonEditor></lfb-item-json-editor>
+        </ng-container>
+        <div *ngIf="errors$ | async" class="text-danger" style="margin: 10px 0;" aria-hidden="true">{{ errorMessage }}</div>
+        <div class="item-actions" appReadonly>
+          <button type="button" class="btn-delete-item"
+                  [disabled]="!(focusNode && focusNode.parent)"
+                  aria-label="Delete this item"
+                  (click)="confirmItemDelete()">Delete this item
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+</div>
 
 <ng-template #addItemDlg let-modal>
   <div class="modal-header btn-primary">

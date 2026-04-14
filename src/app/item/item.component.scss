@@ -1,6 +1,119 @@
 @import '../../styles/colors.scss';
 
-/* ── Tree node styles ── */
+/* ── Flex container for tree + properties ── */
+.item-flex-container {
+  display: flex;
+  flex: 1;
+  gap: 19px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Generic panel ── */
+.item-panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: #FFFFFF;
+  padding: 30px 40px 60px;
+  overflow: hidden;
+  transition: flex 0.3s ease;
+}
+
+.item-panel.panel-collapsed {
+  flex: 0 0 44px;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ── Panel header ── */
+.item-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.item-panel-title {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  color: #000000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Panel body (scrollable) ── */
+.item-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  min-height: 0;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.item-panel-body::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Collapse/expand buttons ── */
+.item-collapse-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F3F5F9;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #153D8A;
+  padding: 0;
+  flex-shrink: 0;
+}
+.item-collapse-btn:hover { background: #E0E8F5; }
+.item-collapse-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+/* ── Collapsed bar ── */
+.panel-collapsed-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 4px;
+  gap: 8px;
+  width: 44px;
+  height: 100%;
+  cursor: pointer;
+}
+.panel-collapsed-bar:hover { background: #EBF2FF; }
+
+.panel-expand-icon {
+  color: #153D8A;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.panel-collapsed-title {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+  font-family: 'Rubik', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #153D8A;
+  white-space: nowrap;
+}
+
+/* ── Tree-specific styles ── */
 .node-content-wrapper {
   width: 100%;
   background-color: transparent;
@@ -29,30 +142,10 @@
   background-color: #F5F8FF;
 }
 
-.overlay {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  top: 40%;
-  left: 0;
-  opacity: 0.5;
-  filter: alpha(opacity=50);
-}
-
-/* ── Panel headers ── */
-.sidenav-header {
-  font-family: 'Rubik', sans-serif;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 28px;
-  color: #000000;
-  background-color: transparent !important;
-  padding: 0 0 20px 0 !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-height: 28px;
+.node-content-wrapper-active {
+  background-color: $light-blue !important;
+  border-radius: 3px;
+  padding: 15px 20px !important;
 }
 
 .node-display-prefix {
@@ -61,54 +154,10 @@
   font-family: 'Rubik', sans-serif;
 }
 
-/* ── Sidenav (tree panel) ── */
-.mat-sidenav {
-  width: 50%;
-}
-
-:host ::ng-deep .mat-drawer-inner-container {
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-:host ::ng-deep .mat-drawer-inner-container::-webkit-scrollbar {
-  display: none;
-}
-
-.mat-sidenav-content {
-  padding: 0;
-}
-
-.mat-tab-body {
-  background-color: white;
-}
-
-.mat-toolbar.mat-primary {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
-.json-radio-group {
-  display: flex;
-  margin: 5px 0;
-}
-
-.json-radio-button {
-  margin: 5px;
-}
-
 /* ── Search input ── */
-.search-box {
-  font-size: small;
-  width: 100%;
-  align-items: end;
-}
-
 #filter {
   width: 100% !important;
-  height: 50px;
+  min-height: 50px;
   border: 1px solid #A8A8A8;
   border-radius: 5px;
   padding: 10px 15px;
@@ -127,98 +176,25 @@
   outline: none;
 }
 
-/* ── Dropdown menu ── */
-.dropdown-toggle::after {
-  display: none;
+/* ── Misc ── */
+.overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  top: 40%;
+  left: 0;
+  opacity: 0.5;
 }
 
-.dropdown-toggle:hover {
-  background-color: white;
-}
+.dropdown-toggle::after { display: none; }
+.dropdown-toggle:hover { background-color: white; }
 
-.disabled-node {
-  opacity: 0.7 !important;
-}
-
-.node-content-wrapper-active {
-  background-color: $light-blue !important;
-  border-radius: 3px;
-  padding: 15px 20px !important;
-}
+.disabled-node { opacity: 0.7 !important; }
 
 .warningIcon {
   margin: 0 5px;
   padding-top: 2px;
-}
-
-.toggle-container {
-  float: right;
-  pointer-events: auto;
-
-  .toggle-icon {
-    pointer-events: auto;
-  }
-}
-
-/* ── Panel collapse/expand ── */
-.item-collapse-btn {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #F3F5F9;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  color: #153D8A;
-  padding: 0;
-  z-index: 3;
-}
-.item-collapse-btn:hover { background: #E0E8F5; }
-.item-collapse-btn mat-icon { font-size: 18px; width: 18px; height: 18px; }
-
-/* ── Tree collapsed bar ── */
-.tree-collapsed-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 4px;
-  gap: 8px;
-  width: 44px;
-  flex-shrink: 0;
-  background: #FFFFFF;
-  cursor: pointer;
-}
-.tree-collapsed-bar:hover { background: #EBF2FF; }
-.tree-collapsed-bar.hidden { display: none; }
-
-.tree-expand-icon {
-  color: #153D8A;
-  font-size: 20px;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-}
-
-.tree-collapsed-title {
-  writing-mode: vertical-lr;
-  transform: rotate(180deg);
-  font-family: 'Rubik', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  color: #153D8A;
-  white-space: nowrap;
-}
-
-/* Header needs position relative for collapse button */
-.sidenav-header {
-  position: relative;
-  display: flex;
-  align-items: center;
 }
 
 /* ── Item actions ── */
@@ -241,3 +217,7 @@
 }
 .btn-delete-item:hover { text-decoration: underline; }
 .btn-delete-item:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.json-radio-group { display: flex; margin: 5px 0; }
+.json-radio-button { margin: 5px; }
+.search-box { font-size: small; width: 100%; align-items: end; }

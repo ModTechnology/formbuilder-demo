@@ -368,8 +368,11 @@ export class FhirSearchPageComponent implements OnInit, AfterViewInit, OnDestroy
   @Output() resumeTheLastForm = new EventEmitter<boolean>;
 
   searchFieldList: SearchField [] = [
-    {field: 'title:contains', display: 'Form title only', searchFieldPlaceholder: 'Search by title'},
-    {field: 'code', display: 'Item code', searchFieldPlaceholder: 'Search by code'},
+    {field: 'title:contains', display: 'Form title only', searchFieldPlaceholder: 'Search form title'},
+    {field: 'identifier:contains', display: 'Form identifier only', searchFieldPlaceholder: 'Search form identifier'},
+    {field: '_content', display: 'Any text field', searchFieldPlaceholder: 'Search any text field'},
+    {field: 'name:contains', display: 'Form name only', searchFieldPlaceholder: 'Search form name'},
+    {field: 'code', display: 'Item code', searchFieldPlaceholder: 'Search item code'},
   ];
 
   filterPanelOpen: boolean = false;

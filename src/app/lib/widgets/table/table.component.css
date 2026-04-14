@@ -28,19 +28,25 @@
   margin-bottom: 0;
 }
 
-/* Transparent header (remove Bootstrap gray) */
-.lfb-table thead.table-active {
+/* Table header as simple labels */
+.lfb-table thead {
   --bs-table-bg: transparent;
   --bs-table-active-bg: transparent;
+}
+
+.lfb-table thead.table-active {
   background: none !important;
+  --bs-table-bg: transparent;
+  --bs-table-active-bg: transparent;
 }
 
 .lfb-table th {
   text-align: left;
-  padding: 0 0 8px;
+  padding: 0 2px 8px !important;
   font-family: 'Rubik', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 19px;
   color: #000;
   background: none !important;
   border: none !important;
@@ -48,13 +54,9 @@
   --bs-table-active-bg: transparent;
 }
 
-/* Hide info icons from table headers */
-.lfb-table th .lfb-title-icon {
-  display: none;
-}
-
 .lfb-table th, .lfb-table td {
   padding: 2px;
+  border: none !important;
 }
 
 .table-header {
