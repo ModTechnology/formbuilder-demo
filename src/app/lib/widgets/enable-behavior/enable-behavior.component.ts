@@ -10,24 +10,23 @@ import {LfbControlWidgetComponent} from '../lfb-control-widget/lfb-control-widge
     <input *ngIf="schema.widget.id ==='hidden'; else displayTemplate"
            name="{{name}}" type="hidden" [formControl]="control" (keydown.enter)='doEnter($event)'>
     <ng-template #displayTemplate>
-      <div class="row">
-        <div [ngClass]="schema.widget.labelWidthClass"></div>
-        <div [ngClass]="schema.widget.controlWidthClass">
-          <lfb-label [helpMessage]="schema.description" [title]="schema.title"></lfb-label>
-          <div [ngClass]="{row: schema.widget.layout === 'row'}">
-            <div *ngFor="let option of schema.oneOf">
-              <label class="horizontal control-label">
-                <input [formControl]="control" [attr.id]="id + '.' + option.enum[0]" (keydown.enter)='doEnter($event)'
-                       value="{{option.enum[0]}}" type="radio"  [attr.disabled]="(schema.readOnly || option.readOnly) ? '' : null">
-                {{option.description}}
-              </label>
-            </div>
-            <div *ngFor="let option of schema.enum" [ngClass]="{col: schema.widget.layout === 'row'}">
-              <input [formControl]="control" [attr.id]="id + '.' + option" name="{{id}}" (keydown.enter)='doEnter($event)'
-                     value="{{option}}" type="radio"  [attr.disabled]="(schema.readOnly || option.readOnly) ? '' : null">
-              <lfb-label [for]="id + '.' + option" class="horizontal control-label ms-sm-2" [title]="displayTexts[option]"></lfb-label>
-            </div>
-          </div>
+      <div class="row m-0">
+        <lfb-label [helpMessage]="schema.description" [title]="schema.title"></lfb-label>
+        <div role="group">
+          <ng-container *ngFor="let option of schema.oneOf">
+            <input [formControl]="control" [attr.id]="id + '.' + option.enum[0]" class="btn-check"
+                   name="{{id}}" (keydown.enter)='doEnter($event)'
+                   [value]="option.enum[0]" type="radio"
+                   [attr.disabled]="(schema.readOnly || option.readOnly) ? '' : null">
+            <label class="btn btn-outline-success" [attr.for]="id + '.' + option.enum[0]">{{option.description}}</label>
+          </ng-container>
+          <ng-container *ngFor="let option of schema.enum">
+            <input [formControl]="control" [attr.id]="id + '.' + option" class="btn-check"
+                   name="{{id}}" (keydown.enter)='doEnter($event)'
+                   [value]="option" type="radio"
+                   [attr.disabled]="schema.readOnly ? '' : null">
+            <label class="btn btn-outline-success" [attr.for]="id + '.' + option">{{displayTexts[option]}}</label>
+          </ng-container>
         </div>
       </div>
     </ng-template>

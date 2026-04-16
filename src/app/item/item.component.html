@@ -1,7 +1,8 @@
 <div class="item-flex-container">
 
   <!-- Tree panel -->
-  <div class="item-panel tree-panel" [class.panel-collapsed]="!treePanelOpen">
+  <div #treePanel class="item-panel tree-panel" [class.panel-collapsed]="!treePanelOpen"
+       [style.flex-basis.px]="treePanelOpen ? treeWidth : null">
     <div class="panel-collapsed-bar" *ngIf="!treePanelOpen" (click)="treePanelOpen = true">
       <mat-icon class="panel-expand-icon">chevron_right</mat-icon>
       <span class="panel-collapsed-title">Arborescence</span>
@@ -14,8 +15,11 @@
         </button>
       </div>
       <div class="item-panel-body" #drawer>
-        <input id="filter" class="form-control" #filter (keyup)="filterNodes(filter.value, tree.treeModel)"
-               placeholder="Filter items by label or linkId"/>
+        <div class="filter-wrapper">
+          <input id="filter" class="form-control" #filter (keyup)="filterNodes(filter.value, tree.treeModel)"
+                 placeholder="Filter items by label or linkId"/>
+          <mat-icon class="filter-icon">search</mat-icon>
+        </div>
         <span (focusin)="treeInitialFocus($event)">
           <tree-root #tree
                      [nodes]="itemList"
@@ -63,8 +67,14 @@
     </ng-container>
   </div>
 
+  <!-- Splitter between tree and properties -->
+  <div class="splitter" *ngIf="treePanelOpen && rightPanelOpen"
+       (mousedown)="onSplitterDown($event)"
+       (dblclick)="onSplitterDblClick()"></div>
+
   <!-- Properties panel -->
-  <div class="item-panel properties-panel" [class.panel-collapsed]="!rightPanelOpen">
+  <div #propertiesPanel class="item-panel properties-panel" [class.panel-collapsed]="!rightPanelOpen"
+       [style.flex-basis.px]="rightPanelOpen ? propertiesWidth : null">
     <div class="panel-collapsed-bar" *ngIf="!rightPanelOpen" (click)="rightPanelOpen = true">
       <mat-icon class="panel-expand-icon">chevron_right</mat-icon>
       <span class="panel-collapsed-title">Properties</span>

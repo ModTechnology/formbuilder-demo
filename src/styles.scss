@@ -234,9 +234,11 @@ sf-form .input-group .btn-outline-secondary:hover {
   color: #153D8A;
 }
 
-/* Boolean radio — OptionSwitcher */
+/* Boolean radio — OptionSwitcher (role="group" for boolean-radio, role="radiogroup" for boolean-controlled) */
 sf-form [role="group"],
-lfb-ngx-schema-form [role="group"] {
+sf-form [role="radiogroup"],
+lfb-ngx-schema-form [role="group"],
+lfb-ngx-schema-form [role="radiogroup"] {
   display: inline-flex !important;
   flex-wrap: wrap;
   align-items: flex-start;
@@ -252,7 +254,9 @@ lfb-ngx-schema-form [role="group"] {
 
 /* Prevent the col wrapper of toggles from stretching full width */
 sf-form [class*="col"]:has([role="group"]),
-lfb-ngx-schema-form [class*="col"]:has([role="group"]) {
+sf-form [class*="col"]:has([role="radiogroup"]),
+lfb-ngx-schema-form [class*="col"]:has([role="group"]),
+lfb-ngx-schema-form [class*="col"]:has([role="radiogroup"]) {
   flex: none !important;
   width: auto !important;
 }

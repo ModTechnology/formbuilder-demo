@@ -11,13 +11,21 @@
         <div class="stepper-container mt-4 mb-4">
           <div class="stepper-form-fields">
             <label class="tf-label">Resource type*</label>
-            <div class="tf-toggle-group">
-              <button type="button" class="tf-toggle-btn"
-                      [class.active]="firstFormGroup.value?.onlyCodeSystem === 'true'"
-                      (click)="firstFormGroup.get('onlyCodeSystem').setValue('true')">Only CodeSystem</button>
-              <button type="button" class="tf-toggle-btn"
-                      [class.active]="firstFormGroup.value?.onlyCodeSystem === 'false'"
-                      (click)="firstFormGroup.get('onlyCodeSystem').setValue('false')">CodeSystem &amp; ValueSet(s)</button>
+            <div class="tf-radio-list">
+              <label class="tf-radio-option">
+                <input type="radio" name="onlyCodeSystem" value="true"
+                       [checked]="firstFormGroup.value?.onlyCodeSystem === 'true'"
+                       (change)="firstFormGroup.get('onlyCodeSystem').setValue('true')">
+                <span class="tf-radio-circle"></span>
+                <span class="tf-radio-text">Only CodeSystem</span>
+              </label>
+              <label class="tf-radio-option">
+                <input type="radio" name="onlyCodeSystem" value="false"
+                       [checked]="firstFormGroup.value?.onlyCodeSystem === 'false'"
+                       (change)="firstFormGroup.get('onlyCodeSystem').setValue('false')">
+                <span class="tf-radio-circle"></span>
+                <span class="tf-radio-text">CodeSystem &amp; ValueSet(s)</span>
+              </label>
             </div>
           </div>
           <div class="option-text" *ngIf="firstFormGroup?.value?.onlyCodeSystem === 'false'">
@@ -36,13 +44,21 @@
           </div>
           <div class="stepper-form-fields">
             <label class="tf-label">Server action*</label>
-            <div class="tf-toggle-group">
-              <button type="button" class="tf-toggle-btn"
-                      [class.active]="firstFormGroup.value?.exportType === 'CREATE'"
-                      (click)="firstFormGroup.get('exportType').setValue('CREATE')">Create</button>
-              <button type="button" class="tf-toggle-btn"
-                      [class.active]="firstFormGroup.value?.exportType === 'UPDATE'"
-                      (click)="firstFormGroup.get('exportType').setValue('UPDATE')">Update</button>
+            <div class="tf-radio-list">
+              <label class="tf-radio-option">
+                <input type="radio" name="exportType" value="CREATE"
+                       [checked]="firstFormGroup.value?.exportType === 'CREATE'"
+                       (change)="firstFormGroup.get('exportType').setValue('CREATE')">
+                <span class="tf-radio-circle"></span>
+                <span class="tf-radio-text">Create</span>
+              </label>
+              <label class="tf-radio-option">
+                <input type="radio" name="exportType" value="UPDATE"
+                       [checked]="firstFormGroup.value?.exportType === 'UPDATE'"
+                       (change)="firstFormGroup.get('exportType').setValue('UPDATE')">
+                <span class="tf-radio-circle"></span>
+                <span class="tf-radio-text">Update</span>
+              </label>
             </div>
           </div>
         </div>
@@ -57,7 +73,7 @@
       <ng-template matStepLabel>CodeSystem selection</ng-template>
       <lfb-code-system-search (codeSystemEventEmitter)="onCodeSystemSelected($event)" [selectedCodeSystem]="selectCodeSystemFormGroup.value?.selectedCodeSystem"></lfb-code-system-search>
       <div class="step-actions">
-        <button class="btn btn-secondary me-2" matStepperPrevious>Back</button>
+        <button class="btn btn-primary me-2" matStepperPrevious>Back</button>
         <button class="btn btn-primary" [disabled]="!selectCodeSystemFormGroup.valid" matStepperNext>Next</button>
       </div>
     </mat-step>
@@ -66,7 +82,7 @@
       <ng-template matStepLabel>CodeSystem attributes definition and content</ng-template>
       <ng-container *ngTemplateOutlet="importFormTemplate"></ng-container>
       <div class="step-actions">
-        <button class="btn btn-secondary me-2" matStepperPrevious>Back</button>
+        <button class="btn btn-primary me-2" matStepperPrevious>Back</button>
         <button [disabled]="!resourceFormGroup.valid || errorMessages?.length > 0" class="btn btn-download"
                 (click)="exportToFiles()">
           Download terminological JSON file(s)
@@ -89,7 +105,7 @@
                               [data]="validation?.data"></lfb-validation-content>
 
       <div class="step-actions">
-        <button class="btn btn-secondary me-2" matStepperPrevious>Back</button>
+        <button class="btn btn-primary me-2" matStepperPrevious>Back</button>
         <button class="btn btn-primary" (click)="exportToServer()"
                 *ngIf="!errorMessages ||errorMessages?.length===0">{{ createUpdateButtonName }}
         </button>
@@ -115,7 +131,7 @@
       ></fhir-export-response>
 
       <div class="step-actions">
-        <button class="btn btn-secondary me-2" (click)="reset();stepper.reset()">Manage another terminological resources
+        <button class="btn btn-manage" (click)="reset();stepper.reset()">Manage another terminological resources
         </button>
       </div>
     </mat-step>

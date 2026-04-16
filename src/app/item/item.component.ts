@@ -9,6 +9,7 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   Output,
@@ -136,6 +137,8 @@ export class ItemComponent implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('uiEditor') uiItemEditor: NgxSchemaFormComponent;
   @ViewChild('formSearch') sInput: MatInput;
   @ViewChild('drawer', {read: ElementRef}) sidenavEl: ElementRef;
+  @ViewChild('treePanel', {read: ElementRef}) treePanelEl: ElementRef;
+  @ViewChild('propertiesPanel', {read: ElementRef}) propertiesPanelEl: ElementRef;
   // qItem: any;
   focusNode: ITreeNode;
   itemData: any = null;
@@ -183,6 +186,15 @@ export class ItemComponent implements AfterViewInit, OnChanges, OnDestroy {
   questionnaire: fhir.Questionnaire = {resourceType: 'Questionnaire', status: 'draft', item: []};
   treePanelOpen = true;
   rightPanelOpen = true;
+
+  treeWidth: number | null = null;
+  propertiesWidth: number | null = null;
+  private minPanelWidth = 300;
+  private isResizing = false;
+  private startX = 0;
+  private startTreeWidth = 0;
+  private startPropertiesWidth = 0;
+
   itemList: any [];
   @Output()
   itemChange = new EventEmitter<any []>();
@@ -240,7 +252,8 @@ export class ItemComponent implements AfterViewInit, OnChanges, OnDestroy {
     private treeService: TreeService,
     private formService: FormService,
     private dataSrv: FetchService,
-    private cdr: ChangeDetectorRef) {
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone) {
     this.itemEditorSchema = formService.itemEditorSchema;
   }
 
@@ -256,6 +269,52 @@ export class ItemComponent implements AfterViewInit, OnChanges, OnDestroy {
       this.toggleTreeExpansion();
     });
   //  this.formService.formChanged$.subscribe(() => this.handleTreeExpansion());
+  }
+
+  onSplitterDblClick(): void {
+    this.treeWidth = null;
+    this.propertiesWidth = null;
+    const treeEl = this.treePanelEl?.nativeElement;
+    const propsEl = this.propertiesPanelEl?.nativeElement;
+    if (treeEl) treeEl.style.flexBasis = '';
+    if (propsEl) propsEl.style.flexBasis = '';
+  }
+
+  onSplitterDown(event: MouseEvent): void {
+    this.isResizing = true;
+    this.startX = event.clientX;
+    const treeEl = this.treePanelEl?.nativeElement;
+    const propsEl = this.propertiesPanelEl?.nativeElement;
+    this.startTreeWidth = this.treeWidth ?? treeEl?.offsetWidth ?? 577;
+    this.startPropertiesWidth = this.propertiesWidth ?? propsEl?.offsetWidth ?? 577;
+
+    this.zone.runOutsideAngular(() => {
+      const moveHandler = (e: MouseEvent) => {
+        if (!this.isResizing) return;
+        const delta = e.clientX - this.startX;
+        const newTree = this.startTreeWidth + delta;
+        const newProperties = this.startPropertiesWidth - delta;
+
+        if (newTree >= this.minPanelWidth && newProperties >= this.minPanelWidth) {
+          if (treeEl) treeEl.style.flexBasis = newTree + 'px';
+          if (propsEl) propsEl.style.flexBasis = newProperties + 'px';
+        }
+      };
+
+      const upHandler = () => {
+        this.isResizing = false;
+        document.removeEventListener('mousemove', moveHandler);
+        document.removeEventListener('mouseup', upHandler);
+
+        this.zone.run(() => {
+          if (treeEl?.style.flexBasis) this.treeWidth = parseFloat(treeEl.style.flexBasis);
+          if (propsEl?.style.flexBasis) this.propertiesWidth = parseFloat(propsEl.style.flexBasis);
+        });
+      };
+
+      document.addEventListener('mousemove', moveHandler);
+      document.addEventListener('mouseup', upHandler);
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {

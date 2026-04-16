@@ -1,11 +1,106 @@
 .fhir-response {
   white-space: pre-wrap;
 }
+
 .export-container {
   display: flex;
   flex-direction: column;
-  padding: 8px;
+  padding: 20px 0;
+  gap: 20px;
 }
-.export-response-title{
-  margin: 32px 16px;
+
+.export-response-title {
+  margin: 16px 0;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+}
+
+/* ── Tab group as OptionSwitcher ── */
+:host ::ng-deep .mat-mdc-tab-group,
+:host ::ng-deep mat-tab-group {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+:host ::ng-deep .mat-mdc-tab-header,
+:host ::ng-deep .mat-tab-header {
+  background: #FCF8FF;
+  border-radius: 5px;
+  padding: 6px;
+  border: none;
+  --mdc-secondary-navigation-tab-container-height: 39px;
+}
+
+:host ::ng-deep .mat-mdc-tab-header-pagination,
+:host ::ng-deep .mat-tab-header-pagination {
+  display: none !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-label-container,
+:host ::ng-deep .mat-tab-label-container {
+  border-bottom: none !important;
+}
+
+:host ::ng-deep .mat-mdc-tab-labels,
+:host ::ng-deep .mat-tab-labels {
+  gap: 3px;
+}
+
+/* Individual tab (pill look) */
+:host ::ng-deep .mat-mdc-tab,
+:host ::ng-deep .mat-tab-label {
+  height: 39px !important;
+  min-width: auto !important;
+  padding: 10px 20px !important;
+  border-radius: 3px !important;
+  opacity: 1 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  line-height: 19px !important;
+  color: #77158A !important;
+  background: transparent;
+}
+
+:host ::ng-deep .mat-mdc-tab .mdc-tab__text-label,
+:host ::ng-deep .mat-tab-label .mat-tab-label-content {
+  color: #77158A !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+}
+
+/* Active tab */
+:host ::ng-deep .mat-mdc-tab.mdc-tab--active,
+:host ::ng-deep .mat-tab-label.mat-tab-label-active {
+  background: #EFD8FF !important;
+}
+
+:host ::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #77158A !important;
+}
+
+/* Remove the underline indicator */
+:host ::ng-deep .mat-mdc-tab-header .mdc-tab-indicator,
+:host ::ng-deep .mat-mdc-tab .mdc-tab-indicator__content--underline,
+:host ::ng-deep .mat-ink-bar {
+  display: none !important;
+}
+
+/* Tab body spacing */
+:host ::ng-deep .mat-mdc-tab-body-wrapper,
+:host ::ng-deep .mat-tab-body-wrapper {
+  padding-top: 20px;
+}
+
+/* Success message color */
+:host ::ng-deep .text-info {
+  color: #153D8A !important;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
 }

@@ -149,6 +149,25 @@
 .terminology-panel .btn-download:hover:not(:disabled) { background: #8e1aa6; }
 .terminology-panel .btn-download:disabled { opacity: 0.4; cursor: not-allowed; }
 
+/* ── Manage another button (purple, step 4) ── */
+.terminology-panel .btn-manage {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 30px;
+  height: 50px;
+  background: #77158A;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+.terminology-panel .btn-manage:hover { background: #8e1aa6; }
+.terminology-panel .btn-manage:disabled { opacity: 0.4; cursor: not-allowed; }
+
 /* ── Form grid (step 2) ── */
 .import-subtitle {
   font-family: 'Rubik', sans-serif;
@@ -181,6 +200,72 @@
   font-size: 14px;
   line-height: 17px;
   color: #000000;
+}
+
+/* ── Radio buttons (Figma style, used in step 1 terminology) ── */
+.tf-radio-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 38px;
+  flex-wrap: wrap;
+}
+
+.tf-radio-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tf-radio-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.tf-radio-circle {
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  background: #FFFFFF;
+  border: 1px solid #D9DBE9;
+  border-radius: 200px;
+  box-shadow: 0px 1px 3px rgba(31, 47, 84, 0.1);
+  flex-shrink: 0;
+  position: relative;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.tf-radio-option input[type="radio"]:checked + .tf-radio-circle {
+  background: #153D8A;
+  border-color: #153D8A;
+}
+
+.tf-radio-option input[type="radio"]:checked + .tf-radio-circle::after {
+  content: '';
+  position: absolute;
+  left: 28.57%;
+  right: 28.57%;
+  top: 28.57%;
+  bottom: 28.57%;
+  background: #FFFFFF;
+  border-radius: 50%;
+}
+
+.tf-radio-text {
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 135%;
+  color: #000000;
+}
+
+.tf-radio-option:hover .tf-radio-circle {
+  border-color: #153D8A;
 }
 
 /* ── OptionSwitcher toggle (replaces mat-radio-group) ── */

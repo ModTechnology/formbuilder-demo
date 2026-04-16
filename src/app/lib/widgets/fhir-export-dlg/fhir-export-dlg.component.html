@@ -1,63 +1,67 @@
-<div role="dialog" aria-labelledby="replyTitle" class="modal-content">
-  <div class="modal-header bg-primary">
-    <h4 id="replyTitle" class="modal-title text-white" role="document">FHIR Server Reply</h4>
-    <button type="button" class="btn-close btn-close-white" aria-label="Close" (click)="close(true)">
+<div role="dialog" aria-labelledby="replyTitle" class="fhir-reply-dialog">
+  <div class="fhir-reply-header">
+    <h2 id="replyTitle" class="fhir-reply-title" role="document">FHIR Server Reply</h2>
+    <button class="btn-close-reply" type="button" aria-label="Close" (click)="close(true)">
+      <mat-icon>close</mat-icon>
     </button>
   </div>
-  <mat-tab-group>
 
-    <mat-tab label="View Server Reply Message">
-      <div *ngIf="notChanged && !error && serverResponse" class="export-response-title text-info">
-        The resource hasn't change since last update and was therefor not modified on the server.
-      </div>
-      <div *ngIf="!notChanged && !error && serverResponse" class="export-response-title text-info">The resource is
-        successfully {{type === 'UPDATE' ? 'updated' : 'created'}} on the server.
-      </div>
-      <div *ngIf="serverResponse" class="export-container serverResponse">
-        <mat-form-field appearance="outline">
-          <mat-label>Title</mat-label>
-          <input type="text" matInput readonly [value]="getValue(serverResponse.title)">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input type="text" matInput readonly [value]="getValue(serverResponse.name)">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Id</mat-label>
-          <input type="text" matInput readonly [value]="getValue(serverResponse.id)">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Version</mat-label>
-          <input type="text" matInput readonly [value]="getValue(serverResponse?.version)">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Meta Version Id</mat-label>
-          <input type="text" matInput readonly [value]="getValue(serverResponse?.meta?.versionId)">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-        <mat-label>Profiles</mat-label>
-          <input type="text" matInput readonly [value]="joinProfiles(serverResponse?.meta?.profile)">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Url</mat-label>
-          <input type="text" matInput readonly [value]="getValue(serverResponse.url)">
-        </mat-form-field>
-      </div>
-    </mat-tab>
-    <mat-tab label="View Server Reply JSON">
-      <ng-template matTabContent>
-        <div class="modal-body bg-light serverResponse" aria-live="polite" *ngIf="serverResponse">
-          <pre class="fhir-response">{{serverResponse | json }}</pre>
+  <div class="fhir-reply-content">
+    <mat-tab-group [mat-stretch-tabs]="false">
+
+      <mat-tab label="View Server Reply Message">
+        <div *ngIf="notChanged && !error && serverResponse" class="export-response-title text-info">
+          The resource hasn't change since last update and was therefor not modified on the server.
         </div>
-      </ng-template>
-    </mat-tab>
+        <div *ngIf="!notChanged && !error && serverResponse" class="export-response-title text-info">The resource is
+          successfully {{type === 'UPDATE' ? 'updated' : 'created'}} on the server.
+        </div>
+        <div *ngIf="serverResponse" class="export-container serverResponse">
+          <mat-form-field appearance="outline">
+            <mat-label>Title</mat-label>
+            <input type="text" matInput readonly [value]="getValue(serverResponse.title)">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input type="text" matInput readonly [value]="getValue(serverResponse.name)">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Id</mat-label>
+            <input type="text" matInput readonly [value]="getValue(serverResponse.id)">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Version</mat-label>
+            <input type="text" matInput readonly [value]="getValue(serverResponse?.version)">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Meta Version Id</mat-label>
+            <input type="text" matInput readonly [value]="getValue(serverResponse?.meta?.versionId)">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+          <mat-label>Profiles</mat-label>
+            <input type="text" matInput readonly [value]="joinProfiles(serverResponse?.meta?.profile)">
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Url</mat-label>
+            <input type="text" matInput readonly [value]="getValue(serverResponse.url)">
+          </mat-form-field>
+        </div>
+      </mat-tab>
+      <mat-tab label="View Server Reply JSON">
+        <ng-template matTabContent>
+          <div class="serverResponse" aria-live="polite" *ngIf="serverResponse">
+            <pre class="fhir-response">{{serverResponse | json }}</pre>
+          </div>
+        </ng-template>
+      </mat-tab>
 
-  </mat-tab-group>
-  <div class="modal-body bg-light" *ngIf="error">
-    <pre class="text-danger" role="alert">{{error.message}}</pre>
+    </mat-tab-group>
+    <div class="error-body" *ngIf="error">
+      <pre class="text-danger" role="alert">{{error.message}}</pre>
+    </div>
   </div>
-  <div class="modal-footer btn-group-sm">
-    <button type="button" class="btn btn-primary" (click)="close(true)">Close</button>
+
+  <div class="fhir-reply-actions">
+    <button class="btn-close-reply-dialog" type="button" (click)="close(true)">Close</button>
   </div>
 </div>
-
