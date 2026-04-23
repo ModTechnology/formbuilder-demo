@@ -40,9 +40,19 @@
   --bs-table-active-bg: transparent;
 }
 
+.lfb-table thead tr.d-flex,
+.lfb-table tbody tr.d-flex {
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.lfb-table td.align-self-center {
+  align-self: flex-start !important;
+}
+
 .lfb-table th {
   text-align: left;
-  padding: 0 2px 8px !important;
+  padding: 0 0 8px !important;
   font-family: 'Rubik', sans-serif;
   font-weight: 400;
   font-size: 16px;
@@ -52,10 +62,13 @@
   border: none !important;
   --bs-table-bg: transparent;
   --bs-table-active-bg: transparent;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .lfb-table th, .lfb-table td {
-  padding: 2px;
+  padding: 4px 0;
   border: none !important;
 }
 

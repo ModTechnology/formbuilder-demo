@@ -3,3 +3,33 @@ lfb-enable-when td.invalid textarea,
 lfb-enable-when td.invalid select {
   outline: 2px solid red;
 }
+
+/* Harmonisation avec table.component.css */
+lfb-enable-when .lfb-table thead tr.d-flex,
+lfb-enable-when .lfb-table tbody tr.d-flex {
+  gap: 15px;
+  align-items: flex-start;
+}
+
+lfb-enable-when .lfb-table td.align-self-center {
+  align-self: flex-start !important;
+}
+
+lfb-enable-when .lfb-table th {
+  text-align: left;
+  padding: 0 0 8px !important;
+  font-family: 'Rubik', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000;
+  background: none !important;
+  border: none !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+lfb-enable-when .lfb-table td {
+  padding: 4px 0;
+}
